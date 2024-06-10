@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React, { useState } from "react";
 
 const LoginForm = () => {
@@ -19,7 +20,6 @@ const LoginForm = () => {
             <h1 className="text-3xl font-bold text-gray-800 mb-2">
               Welcome Back
             </h1>
-            <p className="text-gray-600">Please login to your account</p>
           </div>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
@@ -75,12 +75,12 @@ const LoginForm = () => {
         <div className="text-center">
           <p className="text-gray-600">
             Dont have an account?{" "}
-            <a
-              href="#"
+            <Link
               className="text-purple-600 hover:text-purple-800 font-bold"
+              href="/register"
             >
               Sign Up
-            </a>
+            </Link>
           </p>
         </div>
       </div>
