@@ -3,10 +3,16 @@
 
 // const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+import React from "react";
+import LoginForm from "../components/LoginForm";
+import RegisterForm from "../components/RegisterForm";
+const Home = () => {
   return (
-    <main>
-      <p>Welcome to Spiced Roulette App</p>
-    </main>
+    <div>
+      <LoginForm />
+      <RegisterForm />
+    </div>
   );
-}
+};
+
+export default Home;
