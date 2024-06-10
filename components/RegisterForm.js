@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React, { useState } from "react";
 
 const RegisterForm = () => {
@@ -27,7 +28,6 @@ const RegisterForm = () => {
             <h1 className="text-3xl font-bold text-gray-800 mb-2">
               Create Account
             </h1>
-            <p className="text-gray-600">Start by registering</p>
           </div>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
@@ -115,12 +115,12 @@ const RegisterForm = () => {
         <div className="text-center">
           <p className="text-gray-600">
             Already have an account?{" "}
-            <a
-              href="#"
+            <Link
               className="text-purple-600 hover:text-purple-800 font-bold"
+              href="/login"
             >
               Login
-            </a>
+            </Link>
           </p>
         </div>
       </div>
