@@ -17,9 +17,7 @@ const LoginForm = () => {
         <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
           <div className="mb-4">
             <h1 className="text-2xl font-bold text-gray-800">Login</h1>
-            <p className="text-gray-600">
-              Welcome back! Please login to your account.
-            </p>
+            <p className="text-gray-600">Please login to your account</p>
           </div>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
@@ -71,20 +69,6 @@ const LoginForm = () => {
               </a>
             </div>
           </form>
-          <div className="mt-4 text-center">
-            <p className="text-gray-600">Or login with</p>
-            <div className="flex justify-center mt-2">
-              <a href="#" className="mx-2 text-blue-500 hover:text-blue-800">
-                <i className="fab fa-facebook fa-2x"></i>
-              </a>
-              <a href="#" className="mx-2 text-red-500 hover:text-red-800">
-                <i className="fab fa-google fa-2x"></i>
-              </a>
-              <a href="#" className="mx-2 text-blue-400 hover:text-blue-600">
-                <i className="fab fa-twitter fa-2x"></i>
-              </a>
-            </div>
-          </div>
         </div>
         <div className="text-center">
           <p className="text-gray-600">
