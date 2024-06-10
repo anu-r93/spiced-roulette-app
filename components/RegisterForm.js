@@ -20,12 +20,14 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-500 to-indigo-500">
       <div className="w-full max-w-md">
-        <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-          <div className="mb-4">
-            <h1 className="text-2xl font-bold text-gray-800">Register</h1>
-            <p className="text-gray-600">Create a new account.</p>
+        <div className="bg-white shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4">
+          <div className="mb-6">
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">
+              Create Account
+            </h1>
+            <p className="text-gray-600">Start by registering</p>
           </div>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
@@ -102,7 +104,7 @@ const RegisterForm = () => {
             </div>
             <div className="flex items-center justify-between">
               <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="submit"
               >
                 Register
@@ -113,7 +115,10 @@ const RegisterForm = () => {
         <div className="text-center">
           <p className="text-gray-600">
             Already have an account?{" "}
-            <a href="#" className="text-blue-500 hover:text-blue-800 font-bold">
+            <a
+              href="#"
+              className="text-purple-600 hover:text-purple-800 font-bold"
+            >
               Login
             </a>
           </p>
