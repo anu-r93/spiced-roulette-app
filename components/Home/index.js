@@ -14,8 +14,10 @@ const HomeComponent = () => {
         />
       </div>
       <div className="bg-white shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4 mx-10 text-center">
-        <p className="font-bold text-xl">Tech Brews: Code, Coffee, Connect</p>
-        <p className="px-7 mt-5">
+        <p className="font-bold text-xl text-black">
+          Tech Brews: Code, Coffee, Connect
+        </p>
+        <p className="px-7 mt-5 text-slate-400">
           Fuel your creativity with coffee and connect with fellow tech
           enthusiasts in a relaxed and inspiring environment
         </p>
