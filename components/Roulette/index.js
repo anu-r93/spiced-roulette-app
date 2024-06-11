@@ -1,6 +1,5 @@
 import Image from "next/image";
 import RouletteWheelImage from "./../../assets/roulette-wheel.png";
-// import Link from "next/link";
 import { useState } from "react";
 
 const RouletteFirstScreen = () => {
@@ -25,7 +24,7 @@ const RouletteFirstScreen = () => {
   const Card = ({ title, onClick, isActive }) => {
     return (
       <div
-        className={`bg-white rounded-lg shadow-md p-4 max-w-xs cursor-pointer ${
+        className={`bg-white rounded-lg shadow-md p-4 w-full max-w-xs cursor-pointer ${
           isActive ? "border-2 border-violet-500" : ""
         }`}
         onClick={onClick}
@@ -39,8 +38,8 @@ const RouletteFirstScreen = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-r items-center from-purple-500 to-indigo-500 h-screen">
-      <div className="flex justify-center gap-4 mt-8">
+    <div className="min-h-screen bg-gradient-to-r from-purple-500 to-indigo-500 flex flex-col items-center py-8">
+      <div className="flex flex-wrap justify-center gap-4 mb-8 w-full px-4">
         <Card
           title="Web Development"
           onClick={() => handleCardClick("Web Development")}
@@ -64,17 +63,17 @@ const RouletteFirstScreen = () => {
       </div>
       <div className="wheel relative">
         <Image
-          className={`mt-14 transition-all duration-[5000ms] ease-[cubic-bezier(0.3,1,0.7,1)] will-change-transform rounded-full shadow-[0_0_100px_rgba(0,0,0,0.5)] max-w-[600px] ${
+          className={`transition-all duration-[5000ms] ease-[cubic-bezier(0.3,1,0.7,1)] will-change-transform rounded-full shadow-[0_0_100px_rgba(0,0,0,0.5)] max-w-[300px] ${
             isSpinning ? "animate-spin" : ""
           }`}
           src={RouletteWheelImage}
           alt="Roulette Wheel"
-          width={500}
-          height={500}
+          width={300}
+          height={300}
           style={{ transform: `rotate(${rotation}deg)` }}
         />
       </div>
-      <div className="arrow absolute left-1/2 -translate-x-1/2 -translate-y-[100px] w-0 h-0 border-[80px] border-transparent border-t-[110px] border-t-tomato rounded-[0.35em] z-20" />
+      <div className="arrow absolute left-1/2 -translate-x-1/2 -translate-y-[50px] w-0 h-0 border-[40px] border-transparent border-t-[55px] border-t-tomato rounded-[0.35em] z-20" />
 
       <button
         className="mt-8 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline"
