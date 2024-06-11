@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
 import LoginPage from "./login";
 const LoginAndRegistrationPage = () => {
   return (
