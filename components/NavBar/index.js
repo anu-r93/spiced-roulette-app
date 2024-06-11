@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import HomeIcon from "@mui/icons-material/Home";
 import MessageOutlinedIcon from "@mui/icons-material/MessageOutlined";
@@ -14,12 +14,18 @@ const NavBar = () => {
   const [activeIcon, setActiveIcon] = useState(null);
   const router = useRouter();
 
+  useEffect(() => {
+    const currentPath = router.pathname.split("/")[1];
+    setActiveIcon(currentPath || null);
+  }, [router.pathname]);
+
   const handleIconClick = (icon) => {
-    setActiveIcon(icon === activeIcon ? null : icon);
+    setActiveIcon(icon);
+    router.push(`/${icon}`);
   };
 
   return (
-    <nav className="bg-black py-8">
+    <nav className="fixed bottom-0 left-0 right-0 shadow-md bg-black py-8">
       <ul className="flex justify-center space-x-8">
         <li
           className={`cursor-pointer transition-colors duration-300  ${
@@ -33,7 +39,6 @@ const NavBar = () => {
             ) : (
               <HomeOutlinedIcon fontSize="large" className="mr-4" />
             )}
-            {router.pathname === "/home"}
           </Link>
         </li>
         <li
@@ -48,7 +53,6 @@ const NavBar = () => {
             ) : (
               <TrackChangesOutlinedIcon fontSize="large" className="mr-4" />
             )}
-            {router.pathname === "/profile"}
           </Link>
         </li>
         <li
@@ -63,7 +67,6 @@ const NavBar = () => {
             ) : (
               <MessageOutlinedIcon fontSize="large" className="mr-4" />
             )}
-            {router.pathname === "/message"}
           </Link>
         </li>
         <li
@@ -78,7 +81,6 @@ const NavBar = () => {
             ) : (
               <AccountCircleOutlinedIcon fontSize="large" className="mr-4" />
             )}
-            {router.pathname === "/profile"}
           </Link>
         </li>
       </ul>
