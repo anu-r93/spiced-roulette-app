@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import HomeIcon from "@mui/icons-material/Home";
-import MessageOutlinedIcon from "@mui/icons-material/MessageOutlined";
-import MessageIcon from "@mui/icons-material/Message";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import TrackChangesOutlinedIcon from "@mui/icons-material/TrackChangesOutlined";
-import TrackChangesIcon from "@mui/icons-material/TrackChanges";
+import {
+  HomeOutlined,
+  Home,
+  MessageOutlined,
+  Message,
+  AccountCircleOutlined,
+  AccountCircle,
+  TrackChangesOutlined,
+  TrackChanges,
+} from "@mui/icons-material";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -35,9 +37,9 @@ const NavBar = () => {
         >
           <Link href="/home">
             {activeIcon === "home" ? (
-              <HomeIcon fontSize="large" className="mr-4" />
+              <Home fontSize="large" className="mr-4" />
             ) : (
-              <HomeOutlinedIcon fontSize="large" className="mr-4" />
+              <HomeOutlined fontSize="large" className="mr-4" />
             )}
           </Link>
         </li>
@@ -49,9 +51,9 @@ const NavBar = () => {
         >
           <Link href="/roulette">
             {activeIcon === "roulette" ? (
-              <TrackChangesIcon fontSize="large" className="mr-4" />
+              <TrackChanges fontSize="large" className="mr-4" />
             ) : (
-              <TrackChangesOutlinedIcon fontSize="large" className="mr-4" />
+              <TrackChangesOutlined fontSize="large" className="mr-4" />
             )}
           </Link>
         </li>
@@ -63,9 +65,9 @@ const NavBar = () => {
         >
           <Link href="/message">
             {activeIcon === "message" ? (
-              <MessageIcon fontSize="large" className="mr-4" />
+              <Message fontSize="large" className="mr-4" />
             ) : (
-              <MessageOutlinedIcon fontSize="large" className="mr-4" />
+              <MessageOutlined fontSize="large" className="mr-4" />
             )}
           </Link>
         </li>
@@ -77,9 +79,9 @@ const NavBar = () => {
         >
           <Link href="/profile">
             {activeIcon === "profile" ? (
-              <AccountCircleIcon fontSize="large" className="mr-4" />
+              <AccountCircle fontSize="large" className="mr-4" />
             ) : (
-              <AccountCircleOutlinedIcon fontSize="large" className="mr-4" />
+              <AccountCircleOutlined fontSize="large" className="mr-4" />
             )}
           </Link>
         </li>
