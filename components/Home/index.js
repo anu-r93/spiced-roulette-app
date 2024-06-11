@@ -1,5 +1,6 @@
 import Image from "next/image";
 import CoffeeChatImage from "./../../assets/coffee-chat-transparent.png";
+import Link from "next/link";
 
 const HomeComponent = () => {
   return (
@@ -22,10 +23,10 @@ const HomeComponent = () => {
           enthusiasts in a relaxed and inspiring environment
         </p>
         <button
-          className="mt-8 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="mt-8 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline"
           type="submit"
         >
-          Get started
+          <Link href="/roulette">Get started</Link>
         </button>
       </div>
     </div>
