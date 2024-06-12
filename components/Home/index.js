@@ -7,7 +7,7 @@ const HomeComponent = () => {
     <div className="flex flex-col min-h-screen bg-gradient-to-r items-center from-purple-500 to-indigo-500">
       <div>
         <Image
-          class="mt-20"
+          className="mt-20"
           src={CoffeeChatImage}
           width={700}
           height={700}

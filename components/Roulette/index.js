@@ -1,11 +1,15 @@
 import Image from "next/image";
 import RouletteWheelImage from "./../../assets/roulette-wheel.png";
 import { useState } from "react";
+import { getRandomUser } from "./getUser";
 
 const RouletteFirstScreen = () => {
   const [isSpinning, setIsSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
   const [activeCard, setActiveCard] = useState(null);
+  const [showRandomUser, setShowRandomUser] = useState(false);
+  const [randomUser, setRandomUser] = useState(null);
+  const [showMessageCard, setShowMessageCard] = useState(false);
 
   const handleCardClick = (title) => {
     setActiveCard(title);
@@ -15,10 +19,26 @@ const RouletteFirstScreen = () => {
     setIsSpinning(true);
     const randomRotation = Math.floor(Math.random() * 360 + 720);
     setRotation(randomRotation);
+    const person = getRandomUser();
+    console.log(person);
     setTimeout(() => {
       setIsSpinning(false);
       setActiveCard(null);
+      setShowRandomUser(true);
+      setRandomUser(getRandomUser());
     }, 5000);
+  };
+
+  const handleYesClick = () => {
+    setShowMessageCard(true);
+    // console.log("Yes clicked");
+  };
+
+  const handleNoClick = () => {
+    setShowRandomUser(false);
+    setShowMessageCard(false);
+
+    // console.log("No clicked");
   };
 
   const Card = ({ title, onClick, isActive }) => {
@@ -39,62 +59,96 @@ const RouletteFirstScreen = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-purple-500 to-indigo-500 flex flex-col items-center py-8">
-      <div className="flex flex-wrap text-black justify-center gap-4 mb-8 w-full px-4">
-        <Card
-          title="Web Development"
-          onClick={() => handleCardClick("Web Development")}
-          isActive={activeCard === "Web Development"}
-        />
-        <Card
-          title="UI/UX Design"
-          onClick={() => handleCardClick("UI/UX Design")}
-          isActive={activeCard === "UI/UX Design"}
-        />
-        <Card
-          title="Data Science"
-          onClick={() => handleCardClick("Data Science")}
-          isActive={activeCard === "Data Science"}
-        />
-        <Card
-          title="Java Development"
-          onClick={() => handleCardClick("Java Development")}
-          isActive={activeCard === "Java Development"}
-        />
-      </div>
-      <div className="wheel relative">
-        <Image
-          className={`transition-all duration-[5000ms] ease-[cubic-bezier(0.3,1,0.7,1)] will-change-transform rounded-full shadow-[0_0_100px_rgba(0,0,0,0.5)] max-w-[350px] ${
-            isSpinning ? "animate-spin" : ""
-          }`}
-          src={RouletteWheelImage}
-          alt="Roulette Wheel"
-          width={350}
-          height={350}
-          style={{ transform: `rotate(${rotation}deg)` }}
-        />
-      </div>
+      {!showRandomUser && (
+        <div className="flex flex-wrap text-black justify-center gap-4 mb-8 w-full px-4">
+          <Card
+            title="Web Development"
+            onClick={() => handleCardClick("Web Development")}
+            isActive={activeCard === "Web Development"}
+          />
+          <Card
+            title="UI/UX Design"
+            onClick={() => handleCardClick("UI/UX Design")}
+            isActive={activeCard === "UI/UX Design"}
+          />
+          <Card
+            title="Data Science"
+            onClick={() => handleCardClick("Data Science")}
+            isActive={activeCard === "Data Science"}
+          />
+          <Card
+            title="Java Development"
+            onClick={() => handleCardClick("Java Development")}
+            isActive={activeCard === "Java Development"}
+          />
+        </div>
+      )}
+      {showRandomUser ? (
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-4"></h2>
+          {randomUser && (
+            <div>
+              <p className="text-2xl font-extrabold text-white">
+                {randomUser.name}
+              </p>
+              <Image
+                src={randomUser.avatar}
+                alt={randomUser.name}
+                width={350}
+                height={350}
+                className="mx-auto mt-4 rounded-full"
+              />
+              <div className="mt-8 flex justify-center space-x-4">
+                <button
+                  className="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-10 rounded"
+                  onClick={handleYesClick}
+                >
+                  Yes
+                </button>
+                <button
+                  className="bg-red-500 hover:bg-red-600 text-white font-bold py-4 px-10 rounded"
+                  onClick={handleNoClick}
+                >
+                  No
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="wheel relative">
+          <Image
+            className={`transition-all duration-[5000ms] ease-[cubic-bezier(0.3,1,0.7,1)] will-change-transform rounded-full shadow-[0_0_100px_rgba(0,0,0,0.5)] max-w-[350px] ${
+              isSpinning ? "animate-spin" : ""
+            }`}
+            src={RouletteWheelImage}
+            alt="Roulette Wheel"
+            width={350}
+            height={350}
+            style={{ transform: `rotate(${rotation}deg)` }}
+          />
+        </div>
+      )}
       <div className="arrow absolute left-1/2 -translate-x-1/2 -translate-y-[50px] w-0 h-0 border-[40px] border-transparent border-t-[55px] border-t-tomato rounded-[0.35em] z-20" />
 
-      <button
-        className="mt-8 mb-20 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline"
-        type="submit"
-        onClick={handleSpin}
-        disabled={isSpinning}
-      >
-        Spin the Wheel
-      </button>
+      {!showRandomUser && (
+        <button
+          className="mt-8 mb-20 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline"
+          type="submit"
+          onClick={handleSpin}
+          disabled={isSpinning}
+        >
+          Spin the Wheel
+        </button>
+      )}
+
+      {showMessageCard && (
+        <div className="bg-white rounded-lg shadow-md p-4 mt-8">
+          <p className="text-lg">Click here to message...</p>
+        </div>
+      )}
     </div>
   );
 };
 
 export default RouletteFirstScreen;
-
-{
-  /* <Image
-  class="mt-20"
-  src={RouletteWheelImage}
-  width={500}
-  height={500}
-  alt="Roulette Wheel picture"
-/>; */
-}
