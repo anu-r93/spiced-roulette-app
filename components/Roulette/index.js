@@ -1,9 +1,16 @@
 import Image from "next/image";
 import RouletteWheelImage from "./../../assets/roulette-wheel.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getRandomUser } from "./getUser";
 
 const RouletteFirstScreen = () => {
+  // const testUser = {
+  //   userId: "4c06c6d2-7cc8-400d-b447-363903317260",
+  //   username: "Jeanne_Fahey",
+  //   email: "Peggie51@hotmail.com",
+  //   avatar: "https://avatars.githubusercontent.com/u/47763487",
+  //   name: "Isaac Hauck",
+  // };
   const [isSpinning, setIsSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
   const [activeCard, setActiveCard] = useState(null);
@@ -31,6 +38,7 @@ const RouletteFirstScreen = () => {
 
   const handleYesClick = () => {
     setShowMessageCard(true);
+
     // console.log("Yes clicked");
   };
 
@@ -143,8 +151,10 @@ const RouletteFirstScreen = () => {
       )}
 
       {showMessageCard && (
-        <div className="bg-white rounded-lg shadow-md p-4 mt-8">
-          <p className="text-lg">Click here to message...</p>
+        <div className="bg-yellow-400 rounded-lg shadow-md p-4 mt-8 animate-bounce text-center">
+          <p className="text-lg font-bold text-white">
+            You successfully sent a connection request!
+          </p>
         </div>
       )}
     </div>
