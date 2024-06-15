@@ -1,11 +1,11 @@
-// import React, { useState } from "react";
-import LoginPage from "./login";
-const LoginAndRegistrationPage = () => {
+import LoginForm from "@/components/LoginForm";
+
+const IndexPage = () => {
   return (
-    <div>
-      <LoginPage />
-    </div>
+    <>
+      <LoginForm />
+    </>
   );
 };
 
-export default LoginAndRegistrationPage;
+export default IndexPage;
