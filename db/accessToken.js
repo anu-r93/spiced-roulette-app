@@ -1,14 +1,16 @@
-import jwt, { decode } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 export const generateAccessToken = async (payload) => {
-  return jwt.sign(payload, process.env.SECRET_STRING);
+  const token = jwt.sign(payload, process.env.SECRET_STRING);
+  return token;
 };
 
 export const verifyAccessToken = async (token) => {
   try {
-    const decodedToken = jwt.verify(token, process.env.SECRET_STRING);
-    console.log(decodedToken);
+    const decoded = jwt.verify(token, process.env.SECRET_STRING);
+    return decoded;
   } catch (error) {
+    console.log("error:", error);
     throw error;
   }
 };
