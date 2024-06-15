@@ -5,6 +5,10 @@ export const generateAccessToken = async (payload) => {
   return token;
 };
 
+export const decodeAccessToken = async (token) => {
+  return jwt.decode(token);
+};
+
 export const verifyAccessToken = async (token) => {
   try {
     const decoded = jwt.verify(token, process.env.SECRET_STRING);
