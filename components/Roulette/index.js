@@ -4,13 +4,6 @@ import { useState, useEffect } from "react";
 import { getRandomUser } from "./getUser";
 
 const RouletteFirstScreen = () => {
-  // const testUser = {
-  //   userId: "4c06c6d2-7cc8-400d-b447-363903317260",
-  //   username: "Jeanne_Fahey",
-  //   email: "Peggie51@hotmail.com",
-  //   avatar: "https://avatars.githubusercontent.com/u/47763487",
-  //   name: "Isaac Hauck",
-  // };
   const [isSpinning, setIsSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
   const [activeCard, setActiveCard] = useState(null);
@@ -22,17 +15,22 @@ const RouletteFirstScreen = () => {
     setActiveCard(title);
   };
 
-  const handleSpin = () => {
+  const handleSpin = async () => {
     setIsSpinning(true);
     const randomRotation = Math.floor(Math.random() * 360 + 720);
     setRotation(randomRotation);
-    const person = getRandomUser();
-    console.log(person);
+    const response = await fetch("/api/user", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    const { user } = await response.json();
+
     setTimeout(() => {
       setIsSpinning(false);
       setActiveCard(null);
       setShowRandomUser(true);
-      setRandomUser(getRandomUser());
+      setRandomUser(user);
     }, 5000);
   };
 
