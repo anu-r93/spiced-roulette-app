@@ -1,15 +1,31 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
+import { Password } from "./Password";
+import { useForm } from "react-hook-form";
+import Email from "./Email";
+import SubmitButton from "./Button";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { handleSubmit, control } = useForm({ mode: "onTouched" });
+  const router = useRouter();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Need to add login logic here
-    console.log("Email:", email);
-    console.log("Password:", password);
+  const onSubmit = async (data) => {
+    const { email, password } = data;
+
+    try {
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (response.status === 200) {
+        router.push("/home");
+      }
+    } catch (error) {
+      // Error
+    }
   };
 
   return (
@@ -21,55 +37,10 @@ const LoginForm = () => {
               Welcome Back
             </h1>
           </div>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <label
-                className="block text-gray-700 font-bold mb-2"
-                htmlFor="email"
-              >
-                Email
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="email"
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div className="mb-6">
-              <label
-                className="block text-gray-700 font-bold mb-2"
-                htmlFor="password"
-              >
-                Password
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="password"
-                type="password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-            <div className="flex items-center justify-between">
-              <button
-                className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="submit"
-              >
-                Login
-              </button>
-              <a
-                className="inline-block align-baseline font-bold text-sm text-purple-600 hover:text-purple-800"
-                href="#"
-              >
-                Forgot Password?
-              </a>
-            </div>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Email control={control} />
+            <Password control={control} />
+            <SubmitButton text={"Login"} />
           </form>
         </div>
         <div className="text-center">
@@ -87,33 +58,5 @@ const LoginForm = () => {
     </div>
   );
 };
-
-//   return (
-//     <form onSubmit={handleSubmit}>
-//       <div>
-//         <label htmlFor="email">Email</label>
-//         <input
-//           type="email"
-//           id="email"
-//           name="email"
-//           value={formData.email}
-//           onChange={handleChange}
-//           required
-//         />
-//       </div>
-//       <div>
-//         <label htmlFor="password">Password</label>
-//         <input
-//           type="password"
-//           id="password"
-//           name="password"
-//           value={formData.password}
-//           onChange={handleChange}
-//           required
-//         />
-//       </div>
-//       <button type="submit">Login</button>
-//     </form>
-//   );
 
 export default LoginForm;
