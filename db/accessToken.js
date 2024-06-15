@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 
 export const generateAccessToken = async (payload) => {
+  console.log("env variable:", process.env);
   const token = jwt.sign(payload, process.env.SECRET_STRING);
   return token;
 };
