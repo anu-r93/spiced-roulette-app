@@ -1,23 +1,40 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
+import Name from "./Name";
+import { useForm } from "react-hook-form";
+import Email from "./Email";
+import { ConfirmPassword, Password } from "./Password";
+import SubmitButton from "./Button";
+import { useRouter } from "next/navigation";
 
 const RegisterForm = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+  const router = useRouter();
+  const { control, handleSubmit, getValues, formState } = useForm({
+    mode: "onTouched",
   });
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const onSubmit = async (data) => {
+    const { fullName, email, password, confirmPassword } = data;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Need to add registration logic here
+    if (password !== confirmPassword) {
+      // Show error message
+      return false;
+    }
 
-    console.log("Registration form data:", formData);
+    try {
+      // Call register API
+      const response = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, fullName }),
+      });
+
+      if (response.status === 201) {
+        router.push("/home");
+      }
+    } catch (error) {
+      // Error
+    }
   };
 
   return (
@@ -29,87 +46,18 @@ const RegisterForm = () => {
               Create Account
             </h1>
           </div>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <label
-                className="block text-gray-700 font-bold mb-2"
-                htmlFor="name"
-              >
-                Name
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="name"
-                type="text"
-                placeholder="Enter your name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                className="block text-gray-700 font-bold mb-2"
-                htmlFor="email"
-              >
-                Email
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="email"
-                type="email"
-                placeholder="Enter your email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                className="block text-gray-700 font-bold mb-2"
-                htmlFor="password"
-              >
-                Password
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="password"
-                type="password"
-                placeholder="Enter your password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="mb-6">
-              <label
-                className="block text-gray-700 font-bold mb-2"
-                htmlFor="confirmPassword"
-              >
-                Confirm Password
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="confirmPassword"
-                type="password"
-                placeholder="Confirm your password"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="flex items-center justify-between">
-              <button
-                className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="submit"
-              >
-                Register
-              </button>
-            </div>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Name control={control} />
+            <Email control={control} />
+            <Password control={control} />
+            <ConfirmPassword control={control} />
+            <span>
+              {formState.isSubmitted &&
+              getValues("password") !== getValues("confirmPassword")
+                ? "Passwords do not match"
+                : ""}
+            </span>
+            <SubmitButton text="Register" />
           </form>
         </div>
         <div className="text-center">
