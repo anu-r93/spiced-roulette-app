@@ -20,7 +20,7 @@ const ConfirmPassword = ({ control }) => {
         id="confirmPassword"
         type="password"
         placeholder="Confirm your password"
-        name="confirmPassword"
+        name={field.name}
         value={field.confirmPassword}
         onChange={field.onChange}
       />

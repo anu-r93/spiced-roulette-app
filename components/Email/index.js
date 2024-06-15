@@ -17,7 +17,7 @@ const Email = ({ control }) => {
         id="email"
         type="email"
         placeholder="Enter your email"
-        name="email"
+        name={field.name}
         value={field.email}
         onChange={field.onChange}
       />

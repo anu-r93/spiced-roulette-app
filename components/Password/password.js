@@ -17,7 +17,7 @@ const Password = ({ control }) => {
         id="password"
         type="password"
         placeholder="Enter your password"
-        name="password"
+        name={field.name}
         value={field.password}
         onChange={field.onChange}
       />

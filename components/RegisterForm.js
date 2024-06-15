@@ -22,7 +22,6 @@ const RegisterForm = () => {
     }
 
     try {
-      // Call register API
       const response = await fetch("/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

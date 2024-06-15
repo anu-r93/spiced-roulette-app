@@ -17,7 +17,7 @@ const Name = ({ control }) => {
         id="fullName"
         type="text"
         placeholder="Enter your name"
-        name="fullName"
+        name={field.name}
         value={field.value}
         onChange={field.onChange}
       />
