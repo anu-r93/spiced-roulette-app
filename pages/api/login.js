@@ -1,6 +1,6 @@
 import { generateAccessToken } from "@/db/accessToken";
 import dbConnect from "@/db/connect";
-import User from "@/db/models/users/User";
+import User from "@/db/models/User";
 import { comparePassword } from "@/db/passwordHelper";
 import Cookies from "cookies";
 

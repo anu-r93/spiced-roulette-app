@@ -1,6 +1,6 @@
 import { decodeAccessToken } from "@/db/accessToken";
 import dbConnect from "@/db/connect";
-import User from "@/db/models/users/User";
+import User from "@/db/models/User";
 import Cookies from "cookies";
 
 export default async function handler(req, res) {
@@ -21,6 +21,7 @@ export default async function handler(req, res) {
 
     return res.status(200).json({
       user: {
+        id: randomUser._id,
         name: randomUser.fullName,
         email: randomUser.email,
         avatar: randomUser.avatar,
