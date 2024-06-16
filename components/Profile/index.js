@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { FiEdit, FiSave } from "react-icons/fi";
+import useSWR from "swr";
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -10,6 +11,23 @@ const Profile = () => {
     "https://via.placeholder.com/150"
   );
   const [showPendingRequests, setShowPendingRequests] = useState(false);
+  const [pendingRequests, setPendingRequests] = useState([]);
+  const [refetchPendingRequest, setRefetchPendingRequest] = useState(false);
+
+  useEffect(() => {
+    async function getPendingRequests() {
+      const response = await fetch("/api/connectionRequest", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const { connectionRequests } = await response.json();
+
+      setPendingRequests(connectionRequests);
+    }
+
+    getPendingRequests();
+  }, [refetchPendingRequest]);
 
   const handleEditClick = () => {
     setIsEditing(!isEditing);
@@ -39,6 +57,24 @@ const Profile = () => {
   const handleSaveChanges = () => {
     // Save changes logic here
     setIsEditing(false);
+  };
+
+  const handleAcceptRequest = async (id) => {
+    await fetch(`/api/connectionRequest/${id}`, {
+      method: "PUT",
+      body: JSON.stringify({ status: "connected" }),
+      headers: { "Content-Type": "application/json" },
+    });
+    setRefetchPendingRequest(true);
+  };
+
+  const handleRejectRequest = async (id) => {
+    await fetch(`/api/connectionRequest/${id}`, {
+      method: "PUT",
+      body: JSON.stringify({ status: "declined" }),
+      headers: { "Content-Type": "application/json" },
+    });
+    setRefetchPendingRequest(true);
   };
 
   return (
@@ -114,19 +150,32 @@ const Profile = () => {
               Pending Requests
             </h4>
             <span className="bg-red-500 text-white rounded-full px-2 py-1 text-sm">
-              2
+              {pendingRequests.length}
             </span>
           </div>
-          {showPendingRequests && (
+          {showPendingRequests && pendingRequests.length > 0 && (
             <ul className="mt-4">
-              <li className="text-gray-600 mb-2">
-                <span className="font-semibold">Request 1:</span> Lorem ipsum
-                dolor sit amet.
-              </li>
-              <li className="text-gray-600">
-                <span className="font-semibold">Request 2:</span> Consectetur
-                adipiscing elit.
-              </li>
+              {pendingRequests.map(({ sender, _id }) => {
+                return (
+                  <li className="text-gray-600 mb-2" key={_id}>
+                    <span className="font-semibold">{sender.fullName}</span>
+                    <div className="mt-8 flex justify-center space-x-4">
+                      <button
+                        className="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-10 rounded"
+                        onClick={() => handleAcceptRequest(_id)}
+                      >
+                        Yes
+                      </button>
+                      <button
+                        className="bg-red-500 hover:bg-red-600 text-white font-bold py-4 px-10 rounded"
+                        onClick={() => handleRejectRequest(_id)}
+                      >
+                        No
+                      </button>
+                    </div>
+                  </li>
+                );
+              })}
             </ul>
           )}
         </div>

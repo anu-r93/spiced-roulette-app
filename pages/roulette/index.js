@@ -1,13 +1,13 @@
 import NavBar from "@/components/NavBar";
-import RouletteFirstScreen from "@/components/Roulette";
+import Roulette from "@/components/Roulette";
 
-const RouletteSpinPage = () => {
+const RoulettePage = () => {
   return (
     <div>
-      <RouletteFirstScreen />
+      <Roulette />
       <NavBar />
     </div>
   );
 };
 
-export default RouletteSpinPage;
+export default RoulettePage;

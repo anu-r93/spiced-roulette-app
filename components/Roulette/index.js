@@ -3,7 +3,7 @@ import RouletteWheelImage from "./../../assets/roulette-wheel.png";
 import { useState, useEffect } from "react";
 import { getRandomUser } from "./getUser";
 
-const RouletteFirstScreen = () => {
+const Roulette = () => {
   const [isSpinning, setIsSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
   const [activeCard, setActiveCard] = useState(null);
@@ -19,6 +19,7 @@ const RouletteFirstScreen = () => {
     setIsSpinning(true);
     const randomRotation = Math.floor(Math.random() * 360 + 720);
     setRotation(randomRotation);
+
     const response = await fetch("/api/user", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -34,17 +35,18 @@ const RouletteFirstScreen = () => {
     }, 5000);
   };
 
-  const handleYesClick = () => {
+  const handleYesClick = async () => {
     setShowMessageCard(true);
-
-    // console.log("Yes clicked");
+    const response = await fetch("/api/connectionRequest", {
+      method: "POST",
+      body: JSON.stringify({ receiverId: randomUser.id }),
+      headers: { "Content-Type": "application/json" },
+    });
   };
 
   const handleNoClick = () => {
     setShowRandomUser(false);
     setShowMessageCard(false);
-
-    // console.log("No clicked");
   };
 
   const Card = ({ title, onClick, isActive }) => {
@@ -159,4 +161,4 @@ const RouletteFirstScreen = () => {
   );
 };
 
-export default RouletteFirstScreen;
+export default Roulette;

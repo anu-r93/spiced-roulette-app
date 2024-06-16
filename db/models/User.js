@@ -7,6 +7,7 @@ const userSchema = new Schema({
   password: { type: String, required: true },
   email: { type: String, required: true },
   avatar: { type: String },
+  connections: [{ type: Schema.Types.ObjectId, required: true, ref: "User" }],
 });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);
