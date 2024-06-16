@@ -1,7 +1,6 @@
 import Image from "next/image";
-import RouletteWheelImage from "./../../assets/roulette-wheel.png";
-import { useState, useEffect } from "react";
-import { getRandomUser } from "./getUser";
+import { useState } from "react";
+import rouletteWheelImage from "../../assets/roulette-wheel.png";
 
 const Roulette = () => {
   const [isSpinning, setIsSpinning] = useState(false);
@@ -32,7 +31,7 @@ const Roulette = () => {
       setActiveCard(null);
       setShowRandomUser(true);
       setRandomUser(user);
-    }, 5000);
+    }, 3000);
   };
 
   const handleYesClick = async () => {
@@ -129,7 +128,7 @@ const Roulette = () => {
             className={`transition-all duration-[5000ms] ease-[cubic-bezier(0.3,1,0.7,1)] will-change-transform rounded-full shadow-[0_0_100px_rgba(0,0,0,0.5)] max-w-[350px] ${
               isSpinning ? "animate-spin" : ""
             }`}
-            src={RouletteWheelImage}
+            src={rouletteWheelImage}
             alt="Roulette Wheel"
             width={350}
             height={350}
