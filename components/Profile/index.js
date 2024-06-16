@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { FiEdit, FiSave } from "react-icons/fi";
-import useSWR from "swr";
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
