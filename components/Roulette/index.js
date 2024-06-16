@@ -20,7 +20,7 @@ const Roulette = () => {
     const randomRotation = Math.floor(Math.random() * 360 + 720);
     setRotation(randomRotation);
 
-    const response = await fetch("/api/user", {
+    const response = await fetch("/api/randomUser", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
