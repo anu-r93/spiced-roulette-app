@@ -48,7 +48,7 @@ const Roulette = () => {
     setShowMessageCard(false);
   };
 
-  const Card = ({ title, onClick, isActive }) => {
+  const Card = ({ title, onClick, isActive, body }) => {
     return (
       <div
         className={`bg-white rounded-lg shadow-md p-4 w-full max-w-xs cursor-pointer ${
@@ -57,9 +57,7 @@ const Roulette = () => {
         onClick={onClick}
       >
         <h3 className="text-lg font-bold mb-2">{title}</h3>
-        <p className="text-slate-400">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        </p>
+        <p className="text-slate-400">{body}</p>
       </div>
     );
   };
@@ -70,21 +68,25 @@ const Roulette = () => {
         <div className="flex flex-wrap text-black justify-center gap-4 mb-8 w-full px-4">
           <Card
             title="Web Development"
+            body="Connect with alumni to learn about current trends and opportunities in Web Development."
             onClick={() => handleCardClick("Web Development")}
             isActive={activeCard === "Web Development"}
           />
           <Card
             title="UI/UX Design"
+            body="Engage with alumni to explore design techniques and career pathways."
             onClick={() => handleCardClick("UI/UX Design")}
             isActive={activeCard === "UI/UX Design"}
           />
           <Card
             title="Data Science"
+            body="Leverage your connections for insights into analytics, machine learning, and more."
             onClick={() => handleCardClick("Data Science")}
             isActive={activeCard === "Data Science"}
           />
           <Card
             title="Java Development"
+            body="Network with alumni to discuss coding best practices and career advancements."
             onClick={() => handleCardClick("Java Development")}
             isActive={activeCard === "Java Development"}
           />
