@@ -4,6 +4,7 @@ import User from "@/db/models/User";
 import { comparePassword } from "@/db/passwordHelper";
 import Cookies from "cookies";
 
+// authentication
 export default async function handler(req, res) {
   if (req.method === "POST") {
     await dbConnect();

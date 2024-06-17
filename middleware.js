@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { verifyAccessToken } from "./db/accessToken";
 
+// authorization
 export function middleware(request) {
   const accessToken = request.cookies.get("accessToken");
 

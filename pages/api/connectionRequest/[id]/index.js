@@ -1,6 +1,7 @@
 import dbConnect from "@/db/connect";
 import ConnectionRequest from "@/db/models/ConnectionRequest";
 
+//on click yes/no in pending request
 export default async function handler(req, res) {
   if (req.method === "PUT") {
     await dbConnect();
