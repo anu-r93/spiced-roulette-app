@@ -51,10 +51,15 @@ const Roulette = () => {
   const Card = ({ title, onClick, isActive, body }) => {
     return (
       <div
-        className={`bg-white rounded-lg shadow-md p-4 w-full max-w-xs cursor-pointer ${
-          isActive ? "border-2 border-violet-500" : ""
+        className={`bg-white rounded-lg shadow-md p-4 w-full max-w-xs cursor-pointer transition-all duration-300 ${
+          isActive
+            ? "bg-purple-200 text-purple-700 shadow-lg scale-105"
+            : "bg-white text-gray-700"
         }`}
-        onClick={onClick}
+        onClick={(e) => {
+          onClick(title);
+          e.currentTarget.classList.add("hover:bg-purple-100");
+        }}
       >
         <h3 className="text-lg font-bold mb-2">{title}</h3>
         <p className="text-slate-400">{body}</p>
@@ -69,25 +74,25 @@ const Roulette = () => {
           <Card
             title="Web Development"
             body="Connect with alumni to learn about current trends and opportunities in Web Development."
-            onClick={() => handleCardClick("Web Development")}
+            onClick={handleCardClick}
             isActive={activeCard === "Web Development"}
           />
           <Card
             title="UI/UX Design"
             body="Engage with alumni to explore design techniques and career pathways."
-            onClick={() => handleCardClick("UI/UX Design")}
+            onClick={handleCardClick}
             isActive={activeCard === "UI/UX Design"}
           />
           <Card
             title="Data Science"
-            body="Leverage your connections for insights into analytics, machine learning, and more."
-            onClick={() => handleCardClick("Data Science")}
+            body="Leverage your connections for insights into analytics, machine learning, and job prospects."
+            onClick={handleCardClick}
             isActive={activeCard === "Data Science"}
           />
           <Card
             title="Java Development"
-            body="Network with alumni to discuss coding best practices and career advancements."
-            onClick={() => handleCardClick("Java Development")}
+            body="Network with Java Development alumni to discuss coding best practices and career advancements."
+            onClick={handleCardClick}
             isActive={activeCard === "Java Development"}
           />
         </div>
@@ -107,6 +112,9 @@ const Roulette = () => {
                 height={350}
                 className="mx-auto mt-4 rounded-full"
               />
+              <p className="text-2xl font-extrabold text-white">
+                {randomUser.bio}
+              </p>
               <div className="mt-8 flex justify-center space-x-4">
                 <button
                   className="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-10 rounded"

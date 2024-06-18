@@ -27,11 +27,11 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 shadow-md bg-black py-8">
+    <nav className="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-purple-600 to-indigo-600 bg-opacity-50 backdrop-filter backdrop-blur-lg border-t border-purple-200 py-4 hover:ring-4">
       <ul className="flex justify-center space-x-8">
         <li
-          className={`cursor-pointer transition-colors duration-300  ${
-            activeIcon === "home" ? "text-violet-500" : "text-gray-500"
+          className={`cursor-pointer transition-colors duration-300 ${
+            activeIcon === "home" ? "text-white" : "text-gray-300"
           }`}
           onClick={() => handleIconClick("home")}
         >
@@ -45,7 +45,7 @@ const NavBar = () => {
         </li>
         <li
           className={`cursor-pointer transition-colors duration-300 ${
-            activeIcon === "roulette" ? "text-violet-500" : "text-gray-500"
+            activeIcon === "roulette" ? "text-white" : "text-gray-300"
           }`}
           onClick={() => handleIconClick("roulette")}
         >
@@ -59,7 +59,7 @@ const NavBar = () => {
         </li>
         <li
           className={`cursor-pointer transition-colors duration-300 ${
-            activeIcon === "message" ? "text-violet-500" : "text-gray-500"
+            activeIcon === "message" ? "text-white" : "text-gray-300"
           }`}
           onClick={() => handleIconClick("message")}
         >
@@ -73,7 +73,7 @@ const NavBar = () => {
         </li>
         <li
           className={`cursor-pointer transition-colors duration-300 ${
-            activeIcon === "profile" ? "text-violet-500" : "text-gray-500"
+            activeIcon === "profile" ? "text-white" : "text-gray-300"
           }`}
           onClick={() => handleIconClick("profile")}
         >
