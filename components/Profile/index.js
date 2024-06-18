@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import useSWR from "swr";
 import Loader from "../Loader";
+import Logout from "../Logout";
+// import SubmitButton from "../Button";
 
 const Profile = () => {
   const [showPendingRequests, setShowPendingRequests] = useState(false);
@@ -121,6 +123,9 @@ const Profile = () => {
                 </ul>
               )}
             </div>
+          </div>
+          <div className="flex items-center justify-between">
+            <Logout />
           </div>
         </div>
       )}
