@@ -102,6 +102,9 @@ const Profile = () => {
                           <span className="font-semibold text-gray-700">
                             {sender.fullName}
                           </span>
+                          <span className="text-xs text-black ml-4">
+                            {sender.bio}
+                          </span>
                         </div>
                         <div className="flex justify-center space-x-4">
                           <button

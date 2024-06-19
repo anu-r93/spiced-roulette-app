@@ -6,6 +6,7 @@ import Email from "./Email";
 import { ConfirmPassword, Password } from "./Password";
 import SubmitButton from "./Button";
 import { useRouter } from "next/navigation";
+import Logo from "./Logo";
 
 const RegisterForm = () => {
   const router = useRouter();
@@ -38,6 +39,7 @@ const RegisterForm = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-500 to-indigo-500">
+      <Logo />
       <div className="w-full max-w-md  p-8">
         <div className="bg-white shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4">
           <div className="mb-6">
