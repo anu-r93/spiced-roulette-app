@@ -6,7 +6,11 @@ const { Schema } = mongoose;
 const connectionRequestSchema = new Schema({
   sender: { type: Schema.Types.ObjectId, required: true, ref: "User" },
   receiver: { type: Schema.Types.ObjectId, required: true },
-  status: { type: String, required: true },
+  status: {
+    type: String,
+    enum: ["pending", "declined", "connected"],
+    default: "pending",
+  },
 });
 
 const ConnectionRequest =
