@@ -112,9 +112,11 @@ const Roulette = () => {
                 height={350}
                 className="mx-auto mt-4 rounded-full"
               />
-              <p className="text-xl font-extrabold text-white mt-4">
-                {randomUser.bio}
-              </p>
+              <div className="bg-white bg-opacity-80 rounded-lg shadow-md p-4 mt-4 mx-4 sm:mx-0">
+                <p className="text-gray-700 text-sm sm:text-base">
+                  {randomUser.bio}
+                </p>
+              </div>
               <div className="mt-8 flex justify-center space-x-4">
                 <button
                   className="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-10 rounded"
