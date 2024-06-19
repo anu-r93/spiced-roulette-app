@@ -50,7 +50,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-purple-500 to-indigo-500 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-r from-purple-500 to-indigo-500 flex items-center justify-center px-4 pb-20 pt-8">
       {isLoading || error ? (
         <Loader />
       ) : (
@@ -108,13 +108,13 @@ const Profile = () => {
                         </div>
                         <div className="flex justify-center space-x-4">
                           <button
-                            className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+                            className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full"
                             onClick={() => handleAcceptRequest(_id)}
                           >
                             Yes
                           </button>
                           <button
-                            className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+                            className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full"
                             onClick={() => handleRejectRequest(_id)}
                           >
                             No

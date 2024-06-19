@@ -119,13 +119,13 @@ const Roulette = () => {
               </div>
               <div className="mt-8 flex justify-center space-x-4">
                 <button
-                  className="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-10 rounded"
+                  className="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-10 rounded-full"
                   onClick={handleYesClick}
                 >
                   Yes
                 </button>
                 <button
-                  className="bg-red-500 hover:bg-red-600 text-white font-bold py-4 px-10 rounded"
+                  className="bg-red-500 hover:bg-red-600 text-white font-bold py-4 px-10 rounded-full"
                   onClick={handleNoClick}
                 >
                   No
