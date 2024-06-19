@@ -27,7 +27,7 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-purple-600 to-indigo-600 bg-opacity-50 backdrop-filter backdrop-blur-lg border-t border-purple-200 py-4 hover:ring-4">
+    <nav className="fixed bottom-0 left-0 right-0 bg-black bg-opacity-80 backdrop-filter backdrop-blur-lg py-4 hover:ring-4 hover:ring-white/30 transition-all duration-300">
       <ul className="flex justify-center space-x-8">
         <li
           className={`cursor-pointer transition-colors duration-300 ${
