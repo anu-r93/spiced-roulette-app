@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { FiPower } from "react-icons/fi";
 
 const Logout = () => {
   const router = useRouter();
@@ -19,11 +20,11 @@ const Logout = () => {
 
   return (
     <button
-      className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4 ml-4"
+      className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4 ml-4 flex items-center"
       type="submit"
       onClick={handleLogout}
     >
-      Logout
+      <FiPower />
     </button>
   );
 };
