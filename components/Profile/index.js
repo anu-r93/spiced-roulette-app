@@ -8,7 +8,8 @@ import Logout from "../Logout";
 const Profile = () => {
   const [showPendingRequests, setShowPendingRequests] = useState(false);
   const [showSentRequests, setShowSentRequests] = useState(false);
-
+  const [showConnections, setShowConnections] = useState(false);
+  const [connections, setConnections] = useState([]);
   const [pendingRequests, setPendingRequests] = useState([]);
   const [sentRequests, setSentRequests] = useState([]);
   console.log(sentRequests);
@@ -16,6 +17,17 @@ const Profile = () => {
   //const [refetchSentRequest, setRefetchSentRequest] = useState(false);
 
   useEffect(() => {
+    async function getConnections() {
+      const response = await fetch(`/api/connectionRequest/connected`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const { connectionRequests } = await response.json();
+
+      setSentRequests(connectionRequests);
+    }
+
     async function getSentRequests() {
       const response = await fetch(`/api/connectionRequest/sent`, {
         method: "GET",
@@ -40,6 +52,7 @@ const Profile = () => {
 
     getPendingRequests();
     getSentRequests();
+    getConnections();
   }, [refetchPendingRequest]);
 
   const { data: { user } = {}, isLoading, error } = useSWR(`/api/user`);
@@ -50,6 +63,10 @@ const Profile = () => {
 
   const toggleSentRequests = () => {
     setShowSentRequests(!showSentRequests);
+  };
+
+  const toggleConnections = () => {
+    setShowConnections(!showConnections);
   };
 
   const handleAcceptRequest = async (id) => {
@@ -148,7 +165,7 @@ const Profile = () => {
               )}
             </div>
           </div>
-          <div className="p-4">
+          <div className="p-4 -mt-10">
             <div
               className="bg-purple-100 rounded-lg p-4 mb-4 cursor-pointer"
               onClick={toggleSentRequests}
@@ -162,9 +179,8 @@ const Profile = () => {
                 </span>
               </div>
               {showSentRequests && sentRequests.length > 0 && (
-                <ul className="mt-4">
+                <ul className="mt-2">
                   {sentRequests.map(({ receiver, _id }) => {
-                    console.log("receiver:", receiver);
                     return (
                       <li
                         className="bg-white rounded-lg shadow-md p-4 mb-4"
@@ -183,6 +199,47 @@ const Profile = () => {
                           </span>
                           <span className="text-xs text-black ml-4">
                             {receiver.bio}
+                          </span>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </div>
+          </div>
+          <div className="p-4 -mt-10">
+            <div
+              className="bg-purple-100 rounded-lg p-4 mb-4 cursor-pointer"
+              onClick={toggleConnections}
+            >
+              <div className="flex justify-between items-center">
+                <h4 className="text-lg font-semibold text-purple-700">
+                  Your Connections
+                </h4>
+                <span className="bg-red-500 text-white rounded-full px-2 py-1 text-sm">
+                  {connections?.length}
+                </span>
+              </div>
+              {showConnections && connections.length > 0 && (
+                <ul className="mt-2">
+                  {connections.map(({ receiver, _id }) => {
+                    console.log("receiver:", receiver);
+                    return (
+                      <li
+                        className="bg-white rounded-lg shadow-md p-4 mb-4"
+                        key={_id}
+                      >
+                        <div className="flex items-center mb-2">
+                          <Image
+                            src={receiver.avatar}
+                            alt="Profile"
+                            width={50}
+                            height={50}
+                            className="rounded-full mr-4"
+                          />
+                          <span className="font-semibold text-gray-700">
+                            {receiver.fullName}
                           </span>
                         </div>
                       </li>
