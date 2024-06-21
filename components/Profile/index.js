@@ -3,31 +3,16 @@ import Image from "next/image";
 import useSWR from "swr";
 import Loader from "../Loader";
 import Logout from "../Logout";
-// import SubmitButton from "../Button";
 
 const Profile = () => {
   const [showPendingRequests, setShowPendingRequests] = useState(false);
   const [showSentRequests, setShowSentRequests] = useState(false);
   const [showConnections, setShowConnections] = useState(false);
-  const [connections, setConnections] = useState([]);
   const [pendingRequests, setPendingRequests] = useState([]);
   const [sentRequests, setSentRequests] = useState([]);
-  console.log(sentRequests);
   const [refetchPendingRequest, setRefetchPendingRequest] = useState(false);
-  //const [refetchSentRequest, setRefetchSentRequest] = useState(false);
 
   useEffect(() => {
-    async function getConnections() {
-      const response = await fetch(`/api/connectionRequest/connected`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
-
-      const { connectionRequests } = await response.json();
-
-      setSentRequests(connectionRequests);
-    }
-
     async function getSentRequests() {
       const response = await fetch(`/api/connectionRequest/sent`, {
         method: "GET",
@@ -52,7 +37,6 @@ const Profile = () => {
 
     getPendingRequests();
     getSentRequests();
-    getConnections();
   }, [refetchPendingRequest]);
 
   const { data: { user } = {}, isLoading, error } = useSWR(`/api/user`);
@@ -65,14 +49,10 @@ const Profile = () => {
     setShowSentRequests(!showSentRequests);
   };
 
-  const toggleConnections = () => {
-    setShowConnections(!showConnections);
-  };
-
-  const handleAcceptRequest = async (id) => {
+  const handleAcceptRequest = async ({ sender, receiver, id }) => {
     await fetch(`/api/connectionRequest/${id}`, {
       method: "PUT",
-      body: JSON.stringify({ status: "connected" }),
+      body: JSON.stringify({ status: "connected", sender, receiver }),
       headers: { "Content-Type": "application/json" },
     });
     setRefetchPendingRequest(true);
@@ -123,7 +103,7 @@ const Profile = () => {
               </div>
               {showPendingRequests && pendingRequests.length > 0 && (
                 <ul className="mt-4">
-                  {pendingRequests.map(({ sender, _id }) => {
+                  {pendingRequests.map(({ sender, receiver, _id }) => {
                     return (
                       <li
                         className="bg-white rounded-lg shadow-md p-4 mb-4"
@@ -147,7 +127,9 @@ const Profile = () => {
                         <div className="flex justify-center space-x-4">
                           <button
                             className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full"
-                            onClick={() => handleAcceptRequest(_id)}
+                            onClick={() =>
+                              handleAcceptRequest({ receiver, sender, id: _id })
+                            }
                           >
                             Yes
                           </button>
@@ -199,47 +181,6 @@ const Profile = () => {
                           </span>
                           <span className="text-xs text-black ml-4">
                             {receiver.bio}
-                          </span>
-                        </div>
-                      </li>
-                    );
-                  })}
-                </ul>
-              )}
-            </div>
-          </div>
-          <div className="p-4 -mt-10">
-            <div
-              className="bg-purple-100 rounded-lg p-4 mb-4 cursor-pointer"
-              onClick={toggleConnections}
-            >
-              <div className="flex justify-between items-center">
-                <h4 className="text-lg font-semibold text-purple-700">
-                  Your Connections
-                </h4>
-                <span className="bg-red-500 text-white rounded-full px-2 py-1 text-sm">
-                  {connections?.length}
-                </span>
-              </div>
-              {showConnections && connections.length > 0 && (
-                <ul className="mt-2">
-                  {connections.map(({ receiver, _id }) => {
-                    console.log("receiver:", receiver);
-                    return (
-                      <li
-                        className="bg-white rounded-lg shadow-md p-4 mb-4"
-                        key={_id}
-                      >
-                        <div className="flex items-center mb-2">
-                          <Image
-                            src={receiver.avatar}
-                            alt="Profile"
-                            width={50}
-                            height={50}
-                            className="rounded-full mr-4"
-                          />
-                          <span className="font-semibold text-gray-700">
-                            {receiver.fullName}
                           </span>
                         </div>
                       </li>

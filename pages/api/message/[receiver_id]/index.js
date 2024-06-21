@@ -1,7 +1,6 @@
 import { decodeAccessToken } from "@/db/accessToken";
 import dbConnect from "@/db/connect";
-import ConnectionRequest from "@/db/models/ConnectionRequest";
-import User from "@/db/models/User";
+import Message from "@/db/models/Message";
 import Cookies from "cookies";
 
 export default async function handler(req, res) {
@@ -12,9 +11,22 @@ export default async function handler(req, res) {
     const accessToken = cookies.get("accessToken");
     const loggedInUser = await decodeAccessToken(accessToken);
 
-    const user = await User.findById(loggedInUser.id).populate("connections");
+    const { receiver_id } = req.query;
 
-    return res.status(200).json({ connections: user.connections });
+    const messages = await Message.find({
+      $or: [
+        {
+          sender: loggedInUser.id,
+          receiver: receiver_id,
+        },
+        {
+          sender: receiver_id,
+          receiver: loggedInUser.id,
+        },
+      ],
+    });
+
+    return res.status(201).json({ status: "success", messages: messages });
   } else {
     res.status(400);
   }
