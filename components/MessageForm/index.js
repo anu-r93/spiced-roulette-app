@@ -20,6 +20,26 @@ const MessageForm = () => {
   }, [user]);
 
   useEffect(() => {
+    async function getMessages() {
+      if (!selectedUser) return;
+      const response = await fetch(`/api/message/${selectedUser?._id}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const { messages } = await response.json();
+
+      setMessages(messages);
+    }
+    getMessages();
+
+    const interval = setInterval(() => getMessages(), 5000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  useEffect(() => {
     async function getConnections() {
       const response = await fetch(`/api/connectionRequest/connected`, {
         method: "GET",
@@ -41,20 +61,6 @@ const MessageForm = () => {
   const handleUserSelect = async (user) => {
     setSelectedUser(user);
     setShowUserList(false);
-
-    async function getMessages() {
-      if (!user) return;
-      const response = await fetch(`/api/message/${user?._id}`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
-
-      const { messages } = await response.json();
-
-      setMessages(messages);
-    }
-
-    getMessages();
   };
 
   const handleMessageChange = (e) => {
