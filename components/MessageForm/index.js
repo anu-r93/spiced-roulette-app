@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { FiSend } from "react-icons/fi";
+import { FiSend, FiArrowLeft } from "react-icons/fi";
 
 const MessageForm = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [message, setMessage] = useState("");
+  const [showUserList, setShowUserList] = useState(true);
 
   const handleUserSelect = (user) => {
     setSelectedUser(user);
+    setShowUserList(false);
   };
 
   const handleMessageChange = (e) => {
@@ -15,9 +17,13 @@ const MessageForm = () => {
   };
 
   const handleSendMessage = () => {
-    // Handle sending the message logic here
     console.log(`Sending message to ${selectedUser.name}: ${message}`);
     setMessage("");
+  };
+
+  const handleBackToList = () => {
+    setShowUserList(true);
+    setSelectedUser(null);
   };
 
   const users = [
@@ -32,82 +38,75 @@ const MessageForm = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-purple-500 to-indigo-500 flex">
-      {/* User List */}
-      <div className="bg-white rounded-l-lg shadow-md w-1/4 p-4">
-        <h2 className="text-lg font-semibold mb-4 text-purple-700">
-          Connections
-        </h2>
-        <ul>
-          {users.map((user) => (
-            <li
-              key={user.id}
-              className={`py-2 px-4 rounded-lg mb-2 cursor-pointer ${
-                selectedUser?.id === user.id
-                  ? "bg-purple-200 text-purple-700"
-                  : "bg-white text-gray-700 hover:bg-purple-100"
-              }`}
-              onClick={() => handleUserSelect(user)}
-            >
-              <div className="flex items-center">
-                <Image
-                  src={user.avatar}
-                  alt="User Avatar"
-                  className="rounded-full mr-2"
-                  width={40}
-                  height={40}
-                />
-                <span>{user.name}</span>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* Message Screen */}
-      <div className="flex-1 bg-white rounded-r-lg shadow-md p-4 flex flex-col justify-between">
-        <div className="flex-1 overflow-y-auto">
-          {selectedUser ? (
-            <div>
-              <div className="flex items-center mb-4">
+    <div className="min-h-screen bg-gradient-to-r from-purple-500 to-indigo-500 flex flex-col">
+      <div className="flex-1 flex flex-col">
+        {showUserList ? (
+          <div className="flex-1 overflow-y-auto">
+            <h2 className="text-xl font-bold p-4 bg-purple-600 text-white">
+              Connections
+            </h2>
+            <ul className="p-4">
+              {users.map((user) => (
+                <li
+                  key={user.id}
+                  className="py-3 px-4 rounded-xl mb-2 cursor-pointer transition-all duration-300 bg-purple-100 hover:bg-purple-200"
+                  onClick={() => handleUserSelect(user)}
+                >
+                  <div className="flex items-center">
+                    <Image
+                      src={user.avatar}
+                      alt="User Avatar"
+                      className="rounded-full mr-3"
+                      width={48}
+                      height={48}
+                    />
+                    <span className="font-semibold text-purple-800">
+                      {user.name}
+                    </span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <>
+            <div className="bg-purple-600 p-4 flex items-left">
+              <button onClick={handleBackToList} className="text-white">
+                <FiArrowLeft size={24} />
+              </button>
+              <div className="flex items-center ml-4">
                 <Image
                   src={selectedUser.avatar}
                   alt="User Avatar"
-                  className="rounded-full mr-2"
+                  className="rounded-full mr-3"
                   width={40}
                   height={40}
                 />
-                <h2 className="text-lg font-semibold text-purple-700">
+                <h2 className="text-lg font-bold text-white">
                   {selectedUser.name}
                 </h2>
               </div>
+            </div>
+            <div className="flex-1 overflow-y-auto p-4 bg-purple-50">
               {/* Message history goes here */}
             </div>
-          ) : (
-            <div className="text-center">
-              <h2 className="text-lg font-semibold text-purple-700">
-                Select a user to start chatting
-              </h2>
+            <div className="mb-16 p-4 flex items-center">
+              <input
+                className="flex-1 bg-purple-100 rounded-full py-2 px-4 text-purple-800 placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-600  "
+                type="text"
+                placeholder="Type your message..."
+                value={message}
+                onChange={handleMessageChange}
+              />
+              <button
+                className="bg-purple-600 hover:bg-purple-700 text-white font-bold p-3 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2 ml-2 transition-colors"
+                onClick={handleSendMessage}
+              >
+                <FiSend size={20} />
+              </button>
             </div>
-          )}
-        </div>
-
-        {/* Type and Send Message */}
-        <div className="bg-white rounded-lg shadow-md pb-24 flex items-center">
-          <input
-            className="shadow appearance-none border rounded-lg w-full py-2 px-3 text-purple-700 leading-tight focus:outline-none focus:shadow-outline focus:border-purple-500"
-            type="text"
-            placeholder="Type your message..."
-            value={message}
-            onChange={handleMessageChange}
-          />
-          <button
-            className="bg-purple-600 hover:bg-purple-700 text-white font-bold p-2 rounded-lg focus:outline-none focus:shadow-outline ml-2"
-            onClick={handleSendMessage}
-          >
-            <FiSend size={20} />
-          </button>
-        </div>
+          </>
+        )}
       </div>
     </div>
   );
