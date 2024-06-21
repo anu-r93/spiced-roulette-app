@@ -1,23 +1,56 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { FiSend, FiArrowLeft } from "react-icons/fi";
+import useSWR from "swr";
 
 const MessageForm = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [message, setMessage] = useState("");
   const [showUserList, setShowUserList] = useState(true);
+  const [connections, setConnections] = useState([]);
 
-  const handleUserSelect = (user) => {
+  useEffect(() => {
+    async function getConnections() {
+      const response = await fetch(`/api/connectionRequest/connected`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const { connections } = await response.json();
+
+      setConnections(connections);
+    }
+
+    getConnections();
+  }, []);
+
+  const handleUserSelect = async (user) => {
     setSelectedUser(user);
     setShowUserList(false);
+
+    async function getMessages() {
+      if (!user) return;
+      const response = await fetch(`/api/message/${user?._id}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const { messages } = await response.json();
+    }
+
+    getMessages();
   };
 
   const handleMessageChange = (e) => {
     setMessage(e.target.value);
   };
 
-  const handleSendMessage = () => {
-    console.log(`Sending message to ${selectedUser.name}: ${message}`);
+  const handleSendMessage = async () => {
+    await fetch(`/api/message`, {
+      method: "POST",
+      body: JSON.stringify({ receiver: selectedUser._id, message: message }),
+      headers: { "Content-Type": "application/json" },
+    });
     setMessage("");
   };
 
@@ -25,17 +58,6 @@ const MessageForm = () => {
     setShowUserList(true);
     setSelectedUser(null);
   };
-
-  const users = [
-    { id: 1, name: "Max Mustermann", avatar: "https://via.placeholder.com/40" },
-    {
-      id: 2,
-      name: "Erika Mustermann",
-      avatar: "https://via.placeholder.com/40",
-    },
-    { id: 3, name: "John Doe", avatar: "https://via.placeholder.com/40" },
-    { id: 4, name: "Jane Doe", avatar: "https://via.placeholder.com/40" },
-  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-purple-500 to-indigo-500 flex flex-col">
@@ -46,26 +68,27 @@ const MessageForm = () => {
               Connections
             </h2>
             <ul className="p-4">
-              {users.map((user) => (
-                <li
-                  key={user.id}
-                  className="py-3 px-4 rounded-xl mb-2 cursor-pointer transition-all duration-300 bg-purple-100 hover:bg-purple-200"
-                  onClick={() => handleUserSelect(user)}
-                >
-                  <div className="flex items-center">
-                    <Image
-                      src={user.avatar}
-                      alt="User Avatar"
-                      className="rounded-full mr-3"
-                      width={48}
-                      height={48}
-                    />
-                    <span className="font-semibold text-purple-800">
-                      {user.name}
-                    </span>
-                  </div>
-                </li>
-              ))}
+              {connections &&
+                connections.map((user) => (
+                  <li
+                    key={user.id}
+                    className="py-3 px-4 rounded-xl mb-2 cursor-pointer transition-all duration-300 bg-purple-100 hover:bg-purple-200"
+                    onClick={() => handleUserSelect(user)}
+                  >
+                    <div className="flex items-center">
+                      <Image
+                        src={user.avatar}
+                        alt="User Avatar"
+                        className="rounded-full mr-3"
+                        width={48}
+                        height={48}
+                      />
+                      <span className="font-semibold text-purple-800">
+                        {user.fullName}
+                      </span>
+                    </div>
+                  </li>
+                ))}
             </ul>
           </div>
         ) : (
@@ -83,7 +106,7 @@ const MessageForm = () => {
                   height={40}
                 />
                 <h2 className="text-lg font-bold text-white">
-                  {selectedUser.name}
+                  {selectedUser.fullName}
                 </h2>
               </div>
             </div>

@@ -3,29 +3,16 @@ import Image from "next/image";
 import useSWR from "swr";
 import Loader from "../Loader";
 import Logout from "../Logout";
-// import SubmitButton from "../Button";
 
 const Profile = () => {
   const [showPendingRequests, setShowPendingRequests] = useState(false);
   const [showSentRequests, setShowSentRequests] = useState(false);
   const [showConnections, setShowConnections] = useState(false);
-  const [connections, setConnections] = useState([]);
   const [pendingRequests, setPendingRequests] = useState([]);
   const [sentRequests, setSentRequests] = useState([]);
   const [refetchPendingRequest, setRefetchPendingRequest] = useState(false);
 
   useEffect(() => {
-    async function getConnections() {
-      const response = await fetch(`/api/connectionRequest/connected`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
-
-      const { connections } = await response.json();
-
-      setConnections(connections);
-    }
-
     async function getSentRequests() {
       const response = await fetch(`/api/connectionRequest/sent`, {
         method: "GET",
@@ -50,7 +37,6 @@ const Profile = () => {
 
     getPendingRequests();
     getSentRequests();
-    getConnections();
   }, [refetchPendingRequest]);
 
   const { data: { user } = {}, isLoading, error } = useSWR(`/api/user`);
@@ -63,9 +49,9 @@ const Profile = () => {
     setShowSentRequests(!showSentRequests);
   };
 
-  const toggleConnections = () => {
-    setShowConnections(!showConnections);
-  };
+  // const toggleConnections = () => {
+  //   setShowConnections(!showConnections);
+  // };
 
   const handleAcceptRequest = async ({ sender, receiver, id }) => {
     await fetch(`/api/connectionRequest/${id}`, {
@@ -208,7 +194,7 @@ const Profile = () => {
               )}
             </div>
           </div>
-          <div className="p-4 -mt-10">
+          {/* <div className="p-4 -mt-10">
             <div
               className="bg-purple-100 rounded-lg p-4 mb-4 cursor-pointer"
               onClick={toggleConnections}
@@ -247,7 +233,7 @@ const Profile = () => {
                 </ul>
               )}
             </div>
-          </div>
+          </div> */}
           <div className="flex items-center justify-between">
             <Logout />
           </div>
