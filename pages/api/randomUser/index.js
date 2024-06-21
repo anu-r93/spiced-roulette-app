@@ -14,23 +14,38 @@ export default async function handler(req, res) {
 
     await dbConnect();
 
+    const loggedInUserConnections = await User.findById(loggedInUser.id);
+
     const users = await User.find({
-      _id: { $nin: loggedInUser.id },
+      _id: { $nin: [loggedInUser.id, ...loggedInUserConnections.connections] },
     });
 
-    const ignoreUserIds = (
+    const ignoreIdSet = new Set();
+    const ignoreUser = (
       await ConnectionRequest.find({
-        sender: loggedInUser.id,
+        $or: [
+          {
+            receiver: loggedInUser.id,
+          },
+          {
+            sender: loggedInUser.id,
+          },
+        ],
         status: { $in: ["pending", "connected"] },
-      }).distinct("receiver")
-    ).map((id) => id.toString());
+      })
+    ).map((user) => {
+      ignoreIdSet.add(user.sender.toString());
+      ignoreIdSet.add(user.receiver.toString());
+    });
 
-    const excludeUserAlreadySentRequest = users.filter(
-      (user) => !ignoreUserIds.includes(user._id.toString())
+    const usersNotConnectedOrRequested = users.filter(
+      (user) => !ignoreIdSet.has(user._id.toString())
     );
 
     const randomUser =
-      excludeUserAlreadySentRequest[Math.floor(Math.random() * users.length)];
+      usersNotConnectedOrRequested[
+        Math.floor(Math.random() * usersNotConnectedOrRequested.length)
+      ];
 
     return res.status(200).json({
       user: {

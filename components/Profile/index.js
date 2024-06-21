@@ -12,9 +12,7 @@ const Profile = () => {
   const [connections, setConnections] = useState([]);
   const [pendingRequests, setPendingRequests] = useState([]);
   const [sentRequests, setSentRequests] = useState([]);
-  console.log(sentRequests);
   const [refetchPendingRequest, setRefetchPendingRequest] = useState(false);
-  // const [refetchConnection, setRefetchConnection] = useState(false);
 
   useEffect(() => {
     async function getConnections() {
@@ -23,9 +21,9 @@ const Profile = () => {
         headers: { "Content-Type": "application/json" },
       });
 
-      const { connectionRequests } = await response.json();
+      const { connections } = await response.json();
 
-      setConnections(connectionRequests);
+      setConnections(connections);
     }
 
     async function getSentRequests() {
@@ -69,10 +67,10 @@ const Profile = () => {
     setShowConnections(!showConnections);
   };
 
-  const handleAcceptRequest = async (id) => {
+  const handleAcceptRequest = async ({ sender, receiver, id }) => {
     await fetch(`/api/connectionRequest/${id}`, {
       method: "PUT",
-      body: JSON.stringify({ status: "connected" }),
+      body: JSON.stringify({ status: "connected", sender, receiver }),
       headers: { "Content-Type": "application/json" },
     });
     setRefetchPendingRequest(true);
@@ -123,7 +121,7 @@ const Profile = () => {
               </div>
               {showPendingRequests && pendingRequests.length > 0 && (
                 <ul className="mt-4">
-                  {pendingRequests.map(({ sender, _id }) => {
+                  {pendingRequests.map(({ sender, receiver, _id }) => {
                     return (
                       <li
                         className="bg-white rounded-lg shadow-md p-4 mb-4"
@@ -147,7 +145,9 @@ const Profile = () => {
                         <div className="flex justify-center space-x-4">
                           <button
                             className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full"
-                            onClick={() => handleAcceptRequest(_id)}
+                            onClick={() =>
+                              handleAcceptRequest({ receiver, sender, id: _id })
+                            }
                           >
                             Yes
                           </button>
@@ -223,8 +223,7 @@ const Profile = () => {
               </div>
               {showConnections && connections.length > 0 && (
                 <ul className="mt-2">
-                  {connections.map(({ receiver, _id }) => {
-                    // console.log("receiver:", receiver);
+                  {connections.map(({ avatar, fullName, _id }) => {
                     return (
                       <li
                         className="bg-white rounded-lg shadow-md p-4 mb-4"
@@ -232,14 +231,14 @@ const Profile = () => {
                       >
                         <div className="flex items-center mb-2">
                           <Image
-                            src={receiver.avatar}
+                            src={avatar}
                             alt="Profile"
                             width={50}
                             height={50}
                             className="rounded-full mr-4"
                           />
                           <span className="font-semibold text-gray-700">
-                            {receiver.fullName}
+                            {fullName}
                           </span>
                         </div>
                       </li>

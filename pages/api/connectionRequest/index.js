@@ -34,7 +34,7 @@ export default async function handler(req, res) {
     const connectionRequests = await ConnectionRequest.find({
       receiver: loggedInUser.id,
       status: "pending",
-    }).populate("sender");
+    }).populate(["sender", "receiver"]);
 
     return res.status(200).json({ connectionRequests });
   } else {
