@@ -1,13 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { FiSend, FiArrowLeft } from "react-icons/fi";
 import useSWR from "swr";
+import { decodeAccessToken } from "@/db/accessToken";
 
 const MessageForm = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [message, setMessage] = useState("");
   const [showUserList, setShowUserList] = useState(true);
   const [connections, setConnections] = useState([]);
+  const [messages, setMessages] = useState([]);
+  const messagesEndRef = useRef(null);
+  const [loggedInUser, setLoggedInUser] = useState(null);
+
+  const { data: { user } = {}, isLoading, error } = useSWR(`/api/user`);
+
+  useEffect(() => {
+    setLoggedInUser(user);
+  }, [user]);
 
   useEffect(() => {
     async function getConnections() {
@@ -24,6 +34,10 @@ const MessageForm = () => {
     getConnections();
   }, []);
 
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   const handleUserSelect = async (user) => {
     setSelectedUser(user);
     setShowUserList(false);
@@ -36,6 +50,8 @@ const MessageForm = () => {
       });
 
       const { messages } = await response.json();
+
+      setMessages(messages);
     }
 
     getMessages();
@@ -46,17 +62,37 @@ const MessageForm = () => {
   };
 
   const handleSendMessage = async () => {
+    if (!message.trim()) return;
+
+    const newMessage = {
+      sender: loggedInUser.id, // Replace with actual current user ID
+      receiver: selectedUser._id,
+      message: message,
+      timestamp: new Date().toISOString(),
+    };
+
+    setMessages([...messages, newMessage]);
+
     await fetch(`/api/message`, {
       method: "POST",
-      body: JSON.stringify({ receiver: selectedUser._id, message: message }),
+      body: JSON.stringify(newMessage),
       headers: { "Content-Type": "application/json" },
     });
+
     setMessage("");
   };
 
   const handleBackToList = () => {
     setShowUserList(true);
     setSelectedUser(null);
+    setMessages([]);
+  };
+
+  const formatTimestamp = (timestamp) => {
+    return new Date(timestamp).toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
   };
 
   return (
@@ -111,15 +147,37 @@ const MessageForm = () => {
               </div>
             </div>
             <div className="flex-1 overflow-y-auto p-4 bg-purple-50">
-              {/* Message history goes here */}
+              {messages.map((msg, index) => (
+                <div
+                  key={index}
+                  className={`mb-4 ${
+                    msg.sender === loggedInUser.id ? "text-right" : "text-left"
+                  }`}
+                >
+                  <div
+                    className={`inline-block p-3 rounded-lg ${
+                      msg.sender === loggedInUser.id
+                        ? "bg-purple-600 text-white"
+                        : "bg-white text-purple-800"
+                    }`}
+                  >
+                    <p>{msg.message}</p>
+                    <p className="text-xs mt-1 opacity-75">
+                      {formatTimestamp(msg.timestamp)}
+                    </p>
+                  </div>
+                </div>
+              ))}
+              <div ref={messagesEndRef} />
             </div>
             <div className="mb-16 p-4 flex items-center">
               <input
-                className="flex-1 bg-purple-100 rounded-full py-2 px-4 text-purple-800 placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-600  "
+                className="flex-1 bg-purple-100 rounded-full py-2 px-4 text-purple-800 placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-600"
                 type="text"
                 placeholder="Type your message..."
                 value={message}
                 onChange={handleMessageChange}
+                onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
               />
               <button
                 className="bg-purple-600 hover:bg-purple-700 text-white font-bold p-3 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2 ml-2 transition-colors"

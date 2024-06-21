@@ -49,10 +49,6 @@ const Profile = () => {
     setShowSentRequests(!showSentRequests);
   };
 
-  // const toggleConnections = () => {
-  //   setShowConnections(!showConnections);
-  // };
-
   const handleAcceptRequest = async ({ sender, receiver, id }) => {
     await fetch(`/api/connectionRequest/${id}`, {
       method: "PUT",
@@ -194,46 +190,6 @@ const Profile = () => {
               )}
             </div>
           </div>
-          {/* <div className="p-4 -mt-10">
-            <div
-              className="bg-purple-100 rounded-lg p-4 mb-4 cursor-pointer"
-              onClick={toggleConnections}
-            >
-              <div className="flex justify-between items-center">
-                <h4 className="text-lg font-semibold text-purple-700">
-                  Your Connections
-                </h4>
-                <span className="bg-red-500 text-white rounded-full px-2 py-1 text-sm">
-                  {connections?.length}
-                </span>
-              </div>
-              {showConnections && connections.length > 0 && (
-                <ul className="mt-2">
-                  {connections.map(({ avatar, fullName, _id }) => {
-                    return (
-                      <li
-                        className="bg-white rounded-lg shadow-md p-4 mb-4"
-                        key={_id}
-                      >
-                        <div className="flex items-center mb-2">
-                          <Image
-                            src={avatar}
-                            alt="Profile"
-                            width={50}
-                            height={50}
-                            className="rounded-full mr-4"
-                          />
-                          <span className="font-semibold text-gray-700">
-                            {fullName}
-                          </span>
-                        </div>
-                      </li>
-                    );
-                  })}
-                </ul>
-              )}
-            </div>
-          </div> */}
           <div className="flex items-center justify-between">
             <Logout />
           </div>
