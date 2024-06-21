@@ -14,7 +14,7 @@ const Profile = () => {
   const [sentRequests, setSentRequests] = useState([]);
   console.log(sentRequests);
   const [refetchPendingRequest, setRefetchPendingRequest] = useState(false);
-  //const [refetchSentRequest, setRefetchSentRequest] = useState(false);
+  // const [refetchConnection, setRefetchConnection] = useState(false);
 
   useEffect(() => {
     async function getConnections() {
@@ -25,7 +25,7 @@ const Profile = () => {
 
       const { connectionRequests } = await response.json();
 
-      setSentRequests(connectionRequests);
+      setConnections(connectionRequests);
     }
 
     async function getSentRequests() {
@@ -224,7 +224,7 @@ const Profile = () => {
               {showConnections && connections.length > 0 && (
                 <ul className="mt-2">
                   {connections.map(({ receiver, _id }) => {
-                    console.log("receiver:", receiver);
+                    // console.log("receiver:", receiver);
                     return (
                       <li
                         className="bg-white rounded-lg shadow-md p-4 mb-4"
