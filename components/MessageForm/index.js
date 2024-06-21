@@ -37,7 +37,7 @@ const MessageForm = () => {
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [selectedUser]);
 
   useEffect(() => {
     async function getConnections() {
@@ -58,7 +58,7 @@ const MessageForm = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const handleUserSelect = async (user) => {
+  const handleUserSelect = (user) => {
     setSelectedUser(user);
     setShowUserList(false);
   };
