@@ -9,6 +9,7 @@ const Roulette = () => {
   const [showRandomUser, setShowRandomUser] = useState(false);
   const [randomUser, setRandomUser] = useState(null);
   const [showMessageCard, setShowMessageCard] = useState(false);
+  const [showButtons, setShowButtons] = useState(true);
 
   const handleCardClick = (title) => {
     setActiveCard(title);
@@ -36,6 +37,7 @@ const Roulette = () => {
 
   const handleYesClick = async () => {
     setShowMessageCard(true);
+    setShowButtons(false);
     const response = await fetch("/api/connectionRequest", {
       method: "POST",
       body: JSON.stringify({ receiverId: randomUser.id }),
@@ -46,6 +48,7 @@ const Roulette = () => {
   const handleNoClick = () => {
     setShowRandomUser(false);
     setShowMessageCard(false);
+    setShowButtons(true);
   };
 
   const Card = ({ title, onClick, isActive, body }) => {
@@ -117,20 +120,22 @@ const Roulette = () => {
                   {randomUser.bio}
                 </p>
               </div>
-              <div className="mt-8 flex justify-center space-x-4">
-                <button
-                  className="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-10 rounded-full"
-                  onClick={handleYesClick}
-                >
-                  Yes
-                </button>
-                <button
-                  className="bg-red-500 hover:bg-red-600 text-white font-bold py-4 px-10 rounded-full"
-                  onClick={handleNoClick}
-                >
-                  No
-                </button>
-              </div>
+              {showRandomUser && showButtons && (
+                <div className="mt-8 flex justify-center space-x-4">
+                  <button
+                    className="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-10 rounded-full"
+                    onClick={handleYesClick}
+                  >
+                    Yes
+                  </button>
+                  <button
+                    className="bg-red-500 hover:bg-red-600 text-white font-bold py-4 px-10 rounded-full"
+                    onClick={handleNoClick}
+                  >
+                    No
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </div>
