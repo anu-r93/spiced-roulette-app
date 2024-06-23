@@ -102,8 +102,8 @@ const MessageForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-purple-500 to-indigo-500 flex flex-col">
-      <div className="flex-1 flex flex-col">
+    <div className="h-screen bg-gradient-to-r from-purple-500 to-indigo-500 flex flex-col">
+      <div className="flex-1 flex flex-col h-full">
         {showUserList ? (
           <div className="flex-1 overflow-y-auto">
             <h2 className="text-xl font-bold p-4 bg-purple-600 text-white">
@@ -135,21 +135,23 @@ const MessageForm = () => {
           </div>
         ) : (
           <>
-            <div className="bg-purple-600 p-4 flex items-left">
-              <button onClick={handleBackToList} className="text-white">
-                <FiArrowLeft size={24} />
-              </button>
-              <div className="flex items-center ml-4">
-                <Image
-                  src={selectedUser.avatar}
-                  alt="User Avatar"
-                  className="rounded-full mr-3"
-                  width={40}
-                  height={40}
-                />
-                <h2 className="text-lg font-bold text-white">
-                  {selectedUser.fullName}
-                </h2>
+            <div className="fixed top-0 left-0 right-0 bg-purple-600 p-2 flex items-center justify-between z-10">
+              <div className="bg-purple-600 p-4 flex items-left">
+                <button onClick={handleBackToList} className="text-white">
+                  <FiArrowLeft size={24} />
+                </button>
+                <div className="flex items-center ml-4">
+                  <Image
+                    src={selectedUser.avatar}
+                    alt="User Avatar"
+                    className="rounded-full mr-3"
+                    width={40}
+                    height={40}
+                  />
+                  <h2 className="text-lg font-bold text-white">
+                    {selectedUser.fullName}
+                  </h2>
+                </div>
               </div>
             </div>
             <div className="flex-1 overflow-y-auto p-4 bg-purple-50">
@@ -163,7 +165,7 @@ const MessageForm = () => {
                   <div
                     className={`inline-block p-3 rounded-lg ${
                       msg.sender === loggedInUser.id
-                        ? "bg-purple-600 text-white"
+                        ? "bg-purple-800 text-white"
                         : "bg-white text-purple-800"
                     }`}
                   >
@@ -174,23 +176,25 @@ const MessageForm = () => {
                   </div>
                 </div>
               ))}
-              <div ref={messagesEndRef} />
+              <div ref={messagesEndRef} className="h-24" />
             </div>
-            <div className="mb-16 p-4 flex items-center">
-              <input
-                className="flex-1 bg-purple-100 rounded-full py-2 px-4 text-purple-800 placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-600"
-                type="text"
-                placeholder="Type your message..."
-                value={message}
-                onChange={handleMessageChange}
-                onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
-              />
-              <button
-                className="bg-purple-600 hover:bg-purple-700 text-white font-bold p-3 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2 ml-2 transition-colors"
-                onClick={handleSendMessage}
-              >
-                <FiSend size={20} />
-              </button>
+            <div className="fixed bottom-16 left-0 right-0 p-2">
+              <div className="flex items-center">
+                <input
+                  className="flex-1 bg-purple-100 rounded-full py-2 px-4 text-purple-800 placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-300"
+                  type="text"
+                  placeholder="Type your message..."
+                  value={message}
+                  onChange={handleMessageChange}
+                  onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
+                />
+                <button
+                  className="bg-green-500 text-white font-bold p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-300 ml-2 transition-colors"
+                  onClick={handleSendMessage}
+                >
+                  <FiSend size={20} />
+                </button>
+              </div>
             </div>
           </>
         )}

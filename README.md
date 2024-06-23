@@ -1,40 +1,71 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Networking Application
 
-## Getting Started
+Name: spicedLink
 
-First, run the development server:
+## Description
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+This is a networking application for students and professionals built with React, Next.js. It allows users to connect with others, send messages, engage in conversations.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+- User authentication
+- User connections/matches
+- Real-time messaging
+- Profile viewing
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## Technologies Used
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- Frontend: [React, Next.js]
+- Backend: [Node.js]
+- Database: [MongoDB]
+- Styling: [Tailwind CSS]
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Installation
 
-## Learn More
+1. Clone the repository:
+   git clone https://github.com/anu-r93/spiced-roulette-app
 
-To learn more about Next.js, take a look at the following resources:
+2. Navigate to the project directory:
+   cd spiced-roulette-app
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Install dependencies:
+   npm install
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+4. Set up environment variables:
 
-## Deploy on Vercel
+- Create a `.env` file in the root directory
+- Add necessary environment variables (see `.env.example` for required variables)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+5. Start the development server:
+   npm run dev
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Usage
+
+[Provide instructions on how to use the app, including any necessary setup steps for users]
+
+- 'Login/Register' to the app with your email ID and password
+
+- You will be redirected to the 'Homepage' on successful login
+- Click on the 'Get Started' button which will take you to the 'Roulette' page
+- 'Select a Course' from which you would like to meet an alumni
+- Spin the wheel, it will pick a Random User from the list and show you with their name and bio
+- You can click on 'Yes' or 'No' - Clicking 'Yes' will 'Send a Request' to the user while clicking 'No' will take you back the 'Roulette' page
+- Once you send a request to the person, you will wait for them to accept your request
+- After connecting, both the users can chat with each other on the 'Message' page
+- You can see your 'Pending Requests' and 'Sent Requests' in the profile page
+- In the end you can 'Logout' if you wish to
+
+## API Endpoints
+
+This app has four API endpoints:
+
+- Random User
+- Connection Rquest
+- Message
+- Login/Register
+
+## Contact
+
+Anushka Raman - anushkaraman93@gmail.com
+
+Project (Deployment) Link: https://spiced-roulette-app.vercel.app/message
