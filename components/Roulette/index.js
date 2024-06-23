@@ -51,6 +51,12 @@ const Roulette = () => {
     setShowButtons(true);
   };
 
+  const handleGoBack = () => {
+    setShowRandomUser(false);
+    setShowMessageCard(false);
+    setShowButtons(true);
+  };
+
   const Card = ({ title, onClick, isActive, body }) => {
     return (
       <div
@@ -167,10 +173,18 @@ const Roulette = () => {
       )}
 
       {showMessageCard && (
-        <div className="bg-yellow-400 rounded-lg shadow-md p-4 mt-8 animate-bounce text-center">
-          <p className="text-lg font-bold text-white">
-            You successfully sent a connection request!
-          </p>
+        <div className="flex flex-col items-center">
+          <div className="bg-yellow-400 rounded-lg shadow-md p-4 mt-8 animate-bounce text-center">
+            <p className="text-lg font-bold text-white">
+              You successfully sent a connection request!
+            </p>
+          </div>
+          <button
+            className="mt-4 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-full focus:outline-none focus:shadow-outline"
+            onClick={handleGoBack}
+          >
+            Go Back
+          </button>
         </div>
       )}
     </div>
