@@ -154,7 +154,7 @@ const MessageForm = () => {
                 </div>
               </div>
             </div>
-            <div className="flex-1 overflow-y-auto p-4 bg-purple-50">
+            <div className="flex-1 overflow-y-auto p-4 bg-purple-50 mt-24">
               {messages.map((msg, index) => (
                 <div
                   key={index}
