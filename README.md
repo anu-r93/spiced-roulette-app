@@ -1,6 +1,6 @@
 # Networking Application
 
-Name: spicedLink
+**Name: spicedLink**
 
 ## Description
 
@@ -41,8 +41,6 @@ This is a networking application for students and professionals built with React
 
 ## Usage
 
-[Provide instructions on how to use the app, including any necessary setup steps for users]
-
 - 'Login/Register' to the app with your email ID and password
 
 - You will be redirected to the 'Homepage' on successful login
@@ -66,6 +64,6 @@ This app has four API endpoints:
 
 ## Contact
 
-Anushka Raman - anushkaraman93@gmail.com
+For any feedback, contact: Anushka Raman - anushkaraman93@gmail.com
 
 Project (Deployment) Link: https://spiced-roulette-app.vercel.app/message
