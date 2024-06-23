@@ -180,7 +180,7 @@ const Roulette = () => {
             </p>
           </div>
           <button
-            className="mt-4 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-full focus:outline-none focus:shadow-outline"
+            className="mt-8 mb-20 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline"
             onClick={handleGoBack}
           >
             Go Back
