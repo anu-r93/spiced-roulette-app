@@ -15,10 +15,10 @@ This is a networking application for students and professionals built with React
 
 ## Technologies Used
 
-- Frontend: [React, Next.js]
-- Backend: [Node.js]
-- Database: [MongoDB]
-- Styling: [Tailwind CSS]
+- Frontend: React, Next.js
+- Backend: Node.js
+- Database: MongoDB
+- Styling: Tailwind CSS
 
 ## Installation
 
