@@ -6,6 +6,8 @@ import axios from "axios";
 const MessagesPage = () => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+
+  //connection is not being used anywhere
   const [connection, setConnection] = useState(null);
   const { data: user } = useSWR("/api/user");
 
